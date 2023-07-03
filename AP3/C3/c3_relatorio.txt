@@ -1,0 +1,115 @@
+1 - O erro nesse arquivo se encontra quando fazemos apenas 1 free para "a",
+ou seja, utilizamos a estrutura do for para fazer a alocação de "a" logo 
+estão sendo alocados 11 espaços na memória, contudo apenas 1 é liberado.
+
+2 - Saída do script para a execução do arquivo original
+
+Script started on 2023-04-04 19:50:20-03:00 [TERM="xterm-256color" TTY="/dev/pts/17" COLUMNS="187" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C3[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C3[00m$ gdb a.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C3/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[Inferior 1 (process 14349) exited normally]
+[?2004h[?2004l
+[?2004h(gdb) quit
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C3[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C3[00m$ valgrind ./a.out
+[?2004l
+==14435== Memcheck, a memory error detector
+==14435== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14435== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==14435== Command: ./a.out
+==14435== 
+==14435== 
+==14435== HEAP SUMMARY:
+==14435==     in use at exit: 3,600 bytes in 9 blocks
+==14435==   total heap usage: 10 allocs, 1 frees, 4,000 bytes allocated
+==14435== 
+==14435== LEAK SUMMARY:
+==14435==    definitely lost: 3,600 bytes in 9 blocks
+==14435==    indirectly lost: 0 bytes in 0 blocks
+==14435==      possibly lost: 0 bytes in 0 blocks
+==14435==    still reachable: 0 bytes in 0 blocks
+==14435==         suppressed: 0 bytes in 0 blocks
+==14435== Rerun with --leak-check=full to see details of leaked memory
+==14435== 
+==14435== For lists of detected and suppressed errors, rerun with: -s
+==14435== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C3[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C3[00m$ exit
+[?2004l
+exit
+
+Script done on 2023-04-04 19:50:49-03:00 [COMMAND_EXIT_CODE="0"]
+
+3 - Para correção apenas movimentei o free(a) para dentro do escopo do for.
+
+4 - Saída do script para a execução do arquivo corrigido
+
+Script started on 2023-04-04 19:51:27-03:00 [TERM="xterm-256color" TTY="/dev/pts/17" COLUMNS="187" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C3[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C3[00m$ exitvalgrind ./a.out[7Pgdb a.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C3/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[Inferior 1 (process 14566) exited normally]
+[?2004h[?2004l
+[?2004h(gdb) quit
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C3[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C3[00m$ gdb a.out[5Pexitvalgrind ./a.out
+[?2004l
+==14618== Memcheck, a memory error detector
+==14618== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==14618== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==14618== Command: ./a.out
+==14618== 
+==14618== 
+==14618== HEAP SUMMARY:
+==14618==     in use at exit: 0 bytes in 0 blocks
+==14618==   total heap usage: 10 allocs, 10 frees, 4,000 bytes allocated
+==14618== 
+==14618== All heap blocks were freed -- no leaks are possible
+==14618== 
+==14618== For lists of detected and suppressed errors, rerun with: -s
+==14618== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C3[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C3[00m$ valgrind ./a.out[7Pgdb a.out[5Pexitvalgrind ./a.outexit[K
+[?2004l
+exit
+
+Script done on 2023-04-04 19:51:47-03:00 [COMMAND_EXIT_CODE="0"]

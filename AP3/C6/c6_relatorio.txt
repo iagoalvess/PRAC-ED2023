@@ -1,0 +1,129 @@
+1 - O erro acontece quando alocamos array->data mas não apontamos
+o ponteiro dPtr para a nova alocação array->data. Ou seja, a alocação 
+antiga de array->data ainda não foi liberada e o programa não tem ponteiro
+para a nova alocação. Portanto está vazando memória.
+
+2 - Saída do script para o arquivo original
+
+Script started on 2023-04-05 08:21:34-03:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="178" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C6[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C6[00m$ exitvalgrind ./a.out[7Pgdb a.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C6/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[Inferior 1 (process 8071) exited normally]
+[?2004h[?2004l
+[?2004h(gdb) quit
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C6[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C6[00m$ gdb a.out[5Pexitvalgrind ./a.out
+[?2004l
+==8074== Memcheck, a memory error detector
+==8074== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==8074== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==8074== Command: ./a.out
+==8074== 
+==8074== Invalid free() / delete / delete[] / realloc()
+==8074==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==8074==    by 0x109215: main (c6.c:21)
+==8074==  Address 0x4a9c090 is 0 bytes inside a block of size 40 free'd
+==8074==    at 0x484DCD3: realloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==8074==    by 0x1091B4: resizeArray(_List*) (c6.c:12)
+==8074==    by 0x109202: main (c6.c:19)
+==8074==  Block was alloc'd at
+==8074==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==8074==    by 0x1091EC: main (c6.c:18)
+==8074== 
+==8074== 
+==8074== HEAP SUMMARY:
+==8074==     in use at exit: 60 bytes in 1 blocks
+==8074==   total heap usage: 3 allocs, 3 frees, 116 bytes allocated
+==8074== 
+==8074== LEAK SUMMARY:
+==8074==    definitely lost: 60 bytes in 1 blocks
+==8074==    indirectly lost: 0 bytes in 0 blocks
+==8074==      possibly lost: 0 bytes in 0 blocks
+==8074==    still reachable: 0 bytes in 0 blocks
+==8074==         suppressed: 0 bytes in 0 blocks
+==8074== Rerun with --leak-check=full to see details of leaked memory
+==8074== 
+==8074== For lists of detected and suppressed errors, rerun with: -s
+==8074== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C6[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C6[00m$ exit
+[?2004l
+exit
+
+Script done on 2023-04-05 08:21:46-03:00 [COMMAND_EXIT_CODE="0"]
+
+3 - Para a solução desse problema podemos atribuir o ponteiro 
+dPtr de volta a array->data antes de retornar do resizeArray.
+Uma simples modificação na função resolverá.
+
+4 - Saída do script para o arquivo corrigido
+
+Script started on 2023-04-05 08:24:26-03:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="178" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C6[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C6[00m$ exitvalgrind ./a.out[7Pgdb a.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C6/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[Inferior 1 (process 8292) exited normally]
+[?2004h[?2004l
+[?2004h(gdb) run[K[K[Kquit
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C6[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C6[00m$ gdb a.out[5Pexitvalgrind ./a.out
+[?2004l
+==8334== Memcheck, a memory error detector
+==8334== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==8334== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==8334== Command: ./a.out
+==8334== 
+==8334== 
+==8334== HEAP SUMMARY:
+==8334==     in use at exit: 0 bytes in 0 blocks
+==8334==   total heap usage: 3 allocs, 3 frees, 116 bytes allocated
+==8334== 
+==8334== All heap blocks were freed -- no leaks are possible
+==8334== 
+==8334== For lists of detected and suppressed errors, rerun with: -s
+==8334== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C6[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C6[00m$ exit
+[?2004l
+exit
+
+Script done on 2023-04-05 08:24:51-03:00 [COMMAND_EXIT_CODE="0"]

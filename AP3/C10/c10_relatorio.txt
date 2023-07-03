@@ -1,0 +1,15 @@
+1 - Descobri o erro da pior forma, simplesmente um loop infinito em meu terminal 
+ao executar o valgrind. Portanto fica claro que é um memory leak que  aloca dinamicamente 
+memória em um loop infinito sem nunca liberá-la, causando um vazamento de memória.
+
+2 - Saída do script para o arquivo original
+
+Optei por não colocar esse script pois mostra apenas excessivas saídas do loop infinito
+
+3 - Para corrigir basta acrescentar um free(p) dentro do loop, o loop ainda permanecerá
+mas agora  a memória alocada será liberada após cada iteração do loop, evitando que o 
+programa consuma toda a memória disponível.
+
+4 - Saída do script para o arquivo corrigido
+
+Optei por não colocar esse script pois mostra apenas excessivas saídas do loop infinito

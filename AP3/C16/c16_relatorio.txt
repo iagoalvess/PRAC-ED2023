@@ -1,0 +1,132 @@
+1 - No caso desse programa o problema é que a variável "b" é inicializada
+com valor "0" e logo depois é chamada por uma função que utiliza "b" em uma
+divisão, logo teriamos uma divisão por zero.
+
+2 - Saída do script para o arquivo original
+
+Script started on 2023-04-07 06:46:44-03:00 [TERM="xterm-256color" TTY="/dev/pts/15" COLUMNS="178" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C16[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C16[00m$ gdb a.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C16/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+
+Program received signal SIGFPE, Arithmetic exception.
+[34m0x000055555555513b[m in [33mactual_calc[m ([36ma[m=13, [36mb[m=0) at [32mc16.c[m:6
+6	  c[31m=[ma[31m/[mb[31m;[m
+[?2004h[?2004l
+[?2004h(gdb) quit
+[?2004l
+[?2004hA debugging session is active.
+
+	Inferior 1 [process 6860] will be killed.
+
+Quit anyway? (y or n) y
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C16[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C16[00m$ valgrind ./a.out
+[?2004l
+==6971== Memcheck, a memory error detector
+==6971== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==6971== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==6971== Command: ./a.out
+==6971== 
+==6971== 
+==6971== Process terminating with default action of signal 8 (SIGFPE)
+==6971==  Integer divide by zero at address 0x1002D87039
+==6971==    at 0x10913B: actual_calc(int, int) (c16.c:6)
+==6971==    by 0x109170: calc() (c16.c:15)
+==6971==    by 0x109184: main (c16.c:20)
+==6971== 
+==6971== HEAP SUMMARY:
+==6971==     in use at exit: 0 bytes in 0 blocks
+==6971==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==6971== 
+==6971== All heap blocks were freed -- no leaks are possible
+==6971== 
+==6971== For lists of detected and suppressed errors, rerun with: -s
+==6971== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+Exceção de ponto flutuante (imagem do núcleo gravada)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C16[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C16[00m$ exit
+[?2004l
+exit
+
+Script done on 2023-04-07 06:47:25-03:00 [COMMAND_EXIT_CODE="136"]
+
+3 - Para solucionarmos esse problema de ponto flutuante podemos construir uma
+barreira na função actual_calc() para ter uma saída específica ao valor zero
+de "b"
+
+4 - Saída para o script do arquivo corrigido
+
+Script started on 2023-04-07 06:51:33-03:00 [TERM="xterm-256color" TTY="/dev/pts/15" COLUMNS="187" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C16[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C16[00m$ gdb a.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C16/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+Erro divisão por zero
+[Inferior 1 (process 7500) exited normally]
+[?2004h[?2004l
+[?2004h(gdb) qi[Kuit
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C16[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C16[00m$ valgrind ./a.out
+[?2004l
+==7574== Memcheck, a memory error detector
+==7574== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==7574== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==7574== Command: ./a.out
+==7574== 
+Erro divisão por zero
+==7574== 
+==7574== HEAP SUMMARY:
+==7574==     in use at exit: 0 bytes in 0 blocks
+==7574==   total heap usage: 1 allocs, 1 frees, 1,024 bytes allocated
+==7574== 
+==7574== All heap blocks were freed -- no leaks are possible
+==7574== 
+==7574== For lists of detected and suppressed errors, rerun with: -s
+==7574== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C16[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C16[00m$ exit
+[?2004l
+exit
+
+Script done on 2023-04-07 06:52:03-03:00 [COMMAND_EXIT_CODE="0"]
+
+
+

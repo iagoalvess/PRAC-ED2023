@@ -1,0 +1,138 @@
+1 - Erros encontrados em relação a rotation3D: acessar membros de um ponteiro não inicializado
+e liberar a memória desse ponteiro de forma incorreta.
+Em relação a text: Liberar a memória de um ponteiro não alocado.
+
+2 - Saída do script para o arquivo original
+
+Script started on 2023-04-04 20:23:27-03:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="187" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C4[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C4[00m$ gdb c4[K[Ka.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C4/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+
+Program received signal SIGSEGV, Segmentation fault.
+[34m0x00007ffff7ca547e[m in [33m__GI___libc_free[m ([36mmem[m=0x64) at [32m./malloc/malloc.c[m:3368
+3368	./malloc/malloc.c: Arquivo ou diretório inexistente.
+[?2004h[?2004l
+[?2004h(gdb) quit
+[?2004l
+[?2004hA debugging session is active.
+
+	Inferior 1 [process 5971] will be killed.
+
+Quit anyway? (y or n) y
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C4[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C4[00m$ valgrind ./a.out
+[?2004l
+==6107== Memcheck, a memory error detector
+==6107== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==6107== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==6107== Command: ./a.out
+==6107== 
+==6107== Use of uninitialised value of size 8
+==6107==    at 0x10917A: main (c4.c:13)
+==6107== 
+==6107== Invalid write of size 4
+==6107==    at 0x10917A: main (c4.c:13)
+==6107==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==6107== 
+==6107== 
+==6107== Process terminating with default action of signal 11 (SIGSEGV)
+==6107==  Access not within mapped region at address 0x0
+==6107==    at 0x10917A: main (c4.c:13)
+==6107==  If you believe this happened as a result of a stack
+==6107==  overflow in your program's main thread (unlikely but
+==6107==  possible), you can try to increase the size of the
+==6107==  main thread stack using the --main-stacksize= flag.
+==6107==  The main thread stack size used in this run was 8388608.
+==6107== 
+==6107== HEAP SUMMARY:
+==6107==     in use at exit: 0 bytes in 0 blocks
+==6107==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==6107== 
+==6107== All heap blocks were freed -- no leaks are possible
+==6107== 
+==6107== Use --track-origins=yes to see where uninitialised values come from
+==6107== For lists of detected and suppressed errors, rerun with: -s
+==6107== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+Falha de segmentação (imagem do núcleo gravada)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C4[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C4[00m$ exit
+[?2004l
+exit
+
+Script done on 2023-04-04 20:24:23-03:00 [COMMAND_EXIT_CODE="139"]
+
+3 - Para corrigir os erros é necessário inicializar corretamente o ponteiro 
+rotation3D e remover a tentativa de liberar a memória do ponteiro text. Além de
+também fazer a correta liberação do ponteiro rotation3D.
+
+4 - Saída do script para o arquivo corrigido
+
+Script started on 2023-04-04 20:37:39-03:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="187" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C4[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C4[00m$ exitvalgrind ./a.out[7Pgdb a.out[5Pexitgdb a.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C4/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[Inferior 1 (process 7159) exited normally]
+[?2004h[?2004l
+[?2004h(gdb) quit
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C4[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C4[00m$ gdb a.out[5Pexitvalgrind ./a.out
+[?2004l
+==7162== Memcheck, a memory error detector
+==7162== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==7162== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==7162== Command: ./a.out
+==7162== 
+==7162== 
+==7162== HEAP SUMMARY:
+==7162==     in use at exit: 0 bytes in 0 blocks
+==7162==   total heap usage: 6 allocs, 6 frees, 112 bytes allocated
+==7162== 
+==7162== All heap blocks were freed -- no leaks are possible
+==7162== 
+==7162== For lists of detected and suppressed errors, rerun with: -s
+==7162== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C4[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C4[00m$ exit
+[?2004l
+exit
+
+Script done on 2023-04-04 20:37:50-03:00 [COMMAND_EXIT_CODE="0"]

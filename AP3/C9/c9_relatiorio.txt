@@ -1,0 +1,127 @@
+1 - Visivelmente fica claro a presença de dois erros, primeiro
+sendo a tentativa de alocar um valor para x em uma posição que 
+é inválida visto que x foi declarada apenas de 0 a 9. O outro 
+erro é simples, estamos usando malloc e não usamos free.
+
+2 - Saída do script para o arquivo original
+
+Script started on 2023-04-05 13:53:35-03:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="178" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C9[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C9[00m$ exitvalgrind ./a.out[7Pgdb a.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C9/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[Inferior 1 (process 17177) exited normally]
+[?2004h[?2004l
+[?2004h(gdb) quit
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C9[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C9[00m$ gdb a.out[5Pexitvalgrind ./a.out
+[?2004l
+==17181== Memcheck, a memory error detector
+==17181== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==17181== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==17181== Command: ./a.out
+==17181== 
+==17181== Invalid write of size 4
+==17181==    at 0x10916B: f() (c9.c:6)
+==17181==    by 0x109180: main (c9.c:11)
+==17181==  Address 0x4a9c068 is 0 bytes after a block of size 40 alloc'd
+==17181==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==17181==    by 0x10915E: f() (c9.c:5)
+==17181==    by 0x109180: main (c9.c:11)
+==17181== 
+==17181== 
+==17181== HEAP SUMMARY:
+==17181==     in use at exit: 40 bytes in 1 blocks
+==17181==   total heap usage: 1 allocs, 0 frees, 40 bytes allocated
+==17181== 
+==17181== LEAK SUMMARY:
+==17181==    definitely lost: 40 bytes in 1 blocks
+==17181==    indirectly lost: 0 bytes in 0 blocks
+==17181==      possibly lost: 0 bytes in 0 blocks
+==17181==    still reachable: 0 bytes in 0 blocks
+==17181==         suppressed: 0 bytes in 0 blocks
+==17181== Rerun with --leak-check=full to see details of leaked memory
+==17181== 
+==17181== For lists of detected and suppressed errors, rerun with: -s
+==17181== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C9[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C9[00m$ exit
+[?2004l
+exit
+
+Script done on 2023-04-05 13:53:44-03:00 [COMMAND_EXIT_CODE="0"]
+
+3 - Para corrigir os dois erros precisamos aumentar o tamanho de x (ou diminuir
+um valor na alocação ou seja de 10 para 9) e precisamos fazer o uso correto do free().
+Para o primeiro erro optei por diminuir o indice da alocação de x para x[9] = 0.
+
+4 - Saída do script para o código corrigido
+
+Script started on 2023-04-05 13:57:23-03:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="178" LINES="25"]
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C9[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C9[00m$ exitvalgrind ./a.out[7Pgdb a.out[5Pexitgdb a.out
+[?2004l
+[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32ma.out[m...
+[?2004h(gdb) run
+[?2004l
+Starting program: [32m/home/iago/Faculdade/EstruturadeDados/AP3/pa03/C9/a.out[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+[Inferior 1 (process 17347) exited normally]
+[?2004h[?2004l
+[?2004h(gdb) quit
+[?2004l
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C9[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C9[00m$ gdb a.out[5Pexitvalgrind ./a.out
+[?2004l
+==17351== Memcheck, a memory error detector
+==17351== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==17351== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==17351== Command: ./a.out
+==17351== 
+==17351== 
+==17351== HEAP SUMMARY:
+==17351==     in use at exit: 0 bytes in 0 blocks
+==17351==   total heap usage: 1 allocs, 1 frees, 40 bytes allocated
+==17351== 
+==17351== All heap blocks were freed -- no leaks are possible
+==17351== 
+==17351== For lists of detected and suppressed errors, rerun with: -s
+==17351== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+[?2004h]0;iago@iago-estudos: ~/Faculdade/EstruturadeDados/AP3/pa03/C9[01;32miago@iago-estudos[00m:[01;34m~/Faculdade/EstruturadeDados/AP3/pa03/C9[00m$ exit
+[?2004l
+exit
+
+Script done on 2023-04-05 13:57:32-03:00 [COMMAND_EXIT_CODE="0"]
+
