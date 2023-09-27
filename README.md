@@ -8,7 +8,7 @@ Fatorial e Fibonacci - Recusividade e Tempo de Execução
 ## Aula 3
 GDB e Valgrind - Depuração
 ## Aula 4
-Pilha e Fla circular
+Pilha e Fila circular
 ## Aula 5
 Árvore binária - Ancestralidade
 ## Aula 6
